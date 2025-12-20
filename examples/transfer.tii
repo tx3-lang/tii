@@ -1,0 +1,64 @@
+{
+  "tii": {
+    "version": "v1beta0"
+  },
+
+  "protocol": {
+    "name": "Basic value transfer protocol",
+    "version": "1.0.0",
+    "description": "Transfer funds between two addresses"
+  },
+
+  "transactions": {
+    "transfer": {
+      "description": "Transfer lovelace from sender to receiver",
+
+      "tir": {
+        "encoding": "hex",
+        "contentType": "tx-ir"
+      },
+
+      "params": {
+        "type": "object",
+        "required": ["sender", "quantity"],
+        "properties": {
+          "sender": {
+            "$ref": "#/components/schemas/address"
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      }
+    }
+  },
+
+  "environments": {
+    "cardano-preview": {
+      "description": "Cardano preview testnet",
+      "defaults": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "sender": {
+              "$ref": "#/components/schemas/address"
+            }
+          }
+        },
+        "defaults": {
+          "sender": "addr_test1qp..."
+        }
+      }
+    }
+  },
+
+  "components": {
+    "schemas": {
+      "address": {
+        "type": "string",
+        "description": "Bech32-encoded Cardano address"
+      }
+    }
+  }
+}

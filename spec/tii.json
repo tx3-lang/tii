@@ -1,0 +1,154 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://tx3.dev/schemas/tii.schema.json",
+    "type": "object",
+    "required": [
+        "tii",
+        "protocol",
+        "transactions"
+    ],
+    "properties": {
+        "tii": {
+            "$ref": "#/$defs/tiiInfo"
+        },
+        "protocol": {
+            "$ref": "#/$defs/protocol"
+        },
+        "transactions": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": {
+                "$ref": "#/$defs/transaction"
+            }
+        },
+        "environments": {
+            "type": "object",
+            "additionalProperties": {
+                "$ref": "#/$defs/environment"
+            }
+        },
+        "components": {
+            "$ref": "#/$defs/components"
+        }
+    },
+    "$defs": {
+        "tiiInfo": {
+            "type": "object",
+            "required": [
+                "version"
+            ],
+            "properties": {
+                "version": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false
+        },
+        "protocol": {
+            "type": "object",
+            "required": [
+                "name",
+                "version"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false
+        },
+        "transaction": {
+            "type": "object",
+            "required": [
+                "tir",
+                "params"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "tir": {
+                    "$ref": "#/$defs/tir"
+                },
+                "params": {
+                    "$ref": "#/$defs/jsonSchema"
+                }
+            },
+            "additionalProperties": false
+        },
+        "tir": {
+            "type": "object",
+            "required": [
+                "encoding",
+                "contentType"
+            ],
+            "properties": {
+                "encoding": {
+                    "type": "string",
+                    "enum": [
+                        "hex",
+                        "base64"
+                    ]
+                },
+                "contentType": {
+                    "type": "string",
+                    "description": "Identifier of the transaction IR format"
+                }
+            },
+            "additionalProperties": false
+        },
+        "environment": {
+            "type": "object",
+            "required": [
+                "defaults"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "defaults": {
+                    "$ref": "#/$defs/environmentDefaults"
+                }
+            },
+            "additionalProperties": false
+        },
+        "environmentDefaults": {
+            "type": "object",
+            "required": [
+                "schema"
+            ],
+            "properties": {
+                "schema": {
+                    "$ref": "#/$defs/jsonSchema",
+                    "description": "Schema describing which transaction parameters this environment may provide defaults for"
+                },
+                "defaults": {
+                    "type": "object",
+                    "description": "Default values applied when this environment is selected"
+                }
+            },
+            "additionalProperties": false
+        },
+        "components": {
+            "type": "object",
+            "properties": {
+                "schemas": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/$defs/jsonSchema"
+                    }
+                }
+            },
+            "additionalProperties": false
+        },
+        "jsonSchema": {
+            "$ref": "https://json-schema.org/draft/2020-12/schema"
+        }
+    }
+}
