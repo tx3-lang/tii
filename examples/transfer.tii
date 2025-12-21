@@ -15,7 +15,8 @@
 
       "tir": {
         "encoding": "hex",
-        "contentType": "tx-ir"
+        "content": "abc",
+        "version": "v1beta0"
       },
 
       "params": {

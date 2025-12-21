@@ -82,7 +82,7 @@
             },
             "additionalProperties": false
         },
-        "tir": {
+        "tirEnvelope": {
             "type": "object",
             "required": [
                 "encoding",
@@ -96,9 +96,13 @@
                         "base64"
                     ]
                 },
-                "contentType": {
+                "content": {
                     "type": "string",
-                    "description": "Identifier of the transaction IR format"
+                    "description": "The encoded TIR bytes in the selected encoding"
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The TIR version of the encoded content"
                 }
             },
             "additionalProperties": false
