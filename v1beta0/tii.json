@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://tx3.dev/schemas/tii.schema.json",
+    "$id": "https://tx3.land/specs/v1beta0/tii",
     "type": "object",
     "required": [
         "tii",
@@ -14,6 +14,15 @@
         "protocol": {
             "$ref": "#/$defs/protocol"
         },
+        "environment": {
+            "$ref": "#/$defs/jsonSchema"
+        },
+        "parties": {
+            "type": "object",
+            "additionalProperties": {
+                "$ref": "#/$defs/party"
+            }
+        },
         "transactions": {
             "type": "object",
             "minProperties": 1,
@@ -21,10 +30,10 @@
                 "$ref": "#/$defs/transaction"
             }
         },
-        "environments": {
+        "profiles": {
             "type": "object",
             "additionalProperties": {
-                "$ref": "#/$defs/environment"
+                "$ref": "#/$defs/profile"
             }
         },
         "components": {
@@ -74,7 +83,7 @@
                     "type": "string"
                 },
                 "tir": {
-                    "$ref": "#/$defs/tir"
+                    "$ref": "#/$defs/TirEnvelope"
                 },
                 "params": {
                     "$ref": "#/$defs/jsonSchema"
@@ -82,59 +91,33 @@
             },
             "additionalProperties": false
         },
-        "tirEnvelope": {
+        "profile": {
             "type": "object",
             "required": [
-                "encoding",
-                "contentType"
-            ],
-            "properties": {
-                "encoding": {
-                    "type": "string",
-                    "enum": [
-                        "hex",
-                        "base64"
-                    ]
-                },
-                "content": {
-                    "type": "string",
-                    "description": "The encoded TIR bytes in the selected encoding"
-                },
-                "version": {
-                    "type": "string",
-                    "description": "The TIR version of the encoded content"
-                }
-            },
-            "additionalProperties": false
-        },
-        "environment": {
-            "type": "object",
-            "required": [
-                "defaults"
+                "environment",
+                "parties"
             ],
             "properties": {
                 "description": {
                     "type": "string"
                 },
-                "defaults": {
-                    "$ref": "#/$defs/environmentDefaults"
+                "environment": {
+                    "type": "object",
+                    "additionalProperties": true
+                },
+                "parties": {
+                    "type": "object",
+                    "additionalProperties": true
                 }
             },
             "additionalProperties": false
         },
-        "environmentDefaults": {
+        "party": {
             "type": "object",
-            "required": [
-                "schema"
-            ],
+            "required": [],
             "properties": {
-                "schema": {
-                    "$ref": "#/$defs/jsonSchema",
-                    "description": "Schema describing which transaction parameters this environment may provide defaults for"
-                },
-                "defaults": {
-                    "type": "object",
-                    "description": "Default values applied when this environment is selected"
+                "description": {
+                    "type": "string"
                 }
             },
             "additionalProperties": false
@@ -153,6 +136,33 @@
         },
         "jsonSchema": {
             "$ref": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "Address": {
+            "type": "string",
+            "format": "bech32"
+        },
+        "UtxoRef": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{64}#[0-9]+$"
+        },
+        "TirEnvelope": {
+            "type": "object",
+            "required": ["encoding", "content", "version"],
+            "properties": {
+                "encoding": {
+                    "type": "string",
+                    "enum": ["hex", "base64"]
+                },
+                "content": {
+                    "type": "string",
+                    "description": "The encoded TIR bytes in the selected encoding"
+                },
+                "version": {
+                    "type": "string",
+                    "description": "The TIR version of the encoded content"
+                }
+            },
+            "additionalProperties": false
         }
     }
 }
