@@ -141,9 +141,27 @@
             "type": "string",
             "format": "bech32"
         },
+        "Bytes": {
+            "type": "string",
+            "pattern": "^(0x)?[0-9a-fA-F]*$",
+            "description": "Hex-encoded byte string, with an optional 0x prefix"
+        },
         "UtxoRef": {
             "type": "string",
             "pattern": "^0x[0-9a-fA-F]{64}#[0-9]+$"
+        },
+        "Utxo": {
+            "type": "object",
+            "description": "A resolved UTxO"
+        },
+        "AnyAsset": {
+            "type": "object",
+            "description": "An asset identified at runtime by policy and name",
+            "properties": {
+                "policy": { "$ref": "#/$defs/Bytes" },
+                "asset_name": { "$ref": "#/$defs/Bytes" },
+                "amount": { "type": "integer" }
+            }
         },
         "TirEnvelope": {
             "type": "object",
